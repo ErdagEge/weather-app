@@ -1,0 +1,18 @@
+.forecast-container {
+  margin: 2rem auto;
+  max-width: 800px;
+  text-align: center;
+}
+
+.forecast-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.forecast-card {
+  width: 120px;
+  text-align: center;
+  color: #111;
+}
