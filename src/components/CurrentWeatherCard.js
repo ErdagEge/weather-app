@@ -1,6 +1,6 @@
 import "./CurrentWeatherCard.css";
 
-function CurrentWeatherCard({ data }) {
+function CurrentWeatherCard({ data, units }) {
   if (!data) return null;
 
   const {
@@ -18,7 +18,7 @@ function CurrentWeatherCard({ data }) {
       <h2>{name}</h2>
       <img src={weatherIcon} alt={weatherDescription} />
       <p>{weatherDescription}</p>
-      <p>Temperature: {temp}°C</p>
+      <p>Temperature: {temp}°{units === "metric" ? "C" : "F"}</p>
       <p>Humidity: {humidity}%</p>
       <p>Wind: {speed} m/s</p>
     </div>

@@ -3,6 +3,7 @@ import CurrentWeatherCard from "./components/CurrentWeatherCard";
 import ForecastContainer from "./components/ForecastContainer";
 import { fetchCurrentWeather, fetchForecast } from "./api/weather";
 import { useEffect, useState } from "react";
+import "./App.css";
 
 
 function App() {
@@ -10,6 +11,14 @@ function App() {
   const [forecastData, setForecastData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [units, setUnits] = useState("metric"); // "metric" for °C, "imperial" for °F
+
+  useEffect(() => {
+    if (weatherData) {
+      const city = weatherData.name;
+      handleSearch(city);
+    }
+  }, [units]);
 
   useEffect(() => {
   if (navigator.geolocation) {
@@ -18,12 +27,12 @@ function App() {
         try {
           setLoading(true);
           const response = await fetch(
-            `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${process.env.REACT_APP_WEATHER_API_KEY}&units=metric`
+            `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${process.env.REACT_APP_WEATHER_API_KEY}&units=${units}`
           );
           const current = await response.json();
 
           const forecastResponse = await fetch(
-            `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${process.env.REACT_APP_WEATHER_API_KEY}&units=metric`
+            `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${process.env.REACT_APP_WEATHER_API_KEY}&units=${units}`
           );
           const forecast = await forecastResponse.json();
 
@@ -43,8 +52,8 @@ function App() {
     setLoading(true);
     setError("");
     try {
-      const current = await fetchCurrentWeather(city);
-      const forecast = await fetchForecast(city);
+      const current = await fetchCurrentWeather(city, units);
+      const forecast = await fetchForecast(city, units);
       setWeatherData(current);
       setForecastData(forecast);
     } catch (err) {
@@ -56,7 +65,16 @@ function App() {
   return (
     <div className="app-container">
       <h1>Weather App</h1>
-      <SearchBar onSearch={handleSearch} />
+      <div className="search-controls">
+        <SearchBar onSearch={handleSearch} />
+        <button
+          onClick={() => setUnits(units === "metric" ? "imperial" : "metric")}
+          className="unit-toggle"
+        >
+          Switch to {units === "metric" ? "°F" : "°C"}
+        </button>
+      </div>
+
       {loading && <div className="spinner"></div>}
       {error && (
         <div className="error-box">
@@ -64,8 +82,8 @@ function App() {
           <button onClick={() => setError("")}>Dismiss</button>
         </div>
       )}
-      {weatherData && <CurrentWeatherCard data={weatherData} />}
-      {forecastData && <ForecastContainer data={forecastData} />}
+      {weatherData && <CurrentWeatherCard data={weatherData} units={units} />}
+      {forecastData && <ForecastContainer data={forecastData} units={units} />}
     </div>
   );
 }

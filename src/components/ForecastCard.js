@@ -1,4 +1,4 @@
-function ForecastCard({ data }) {
+function ForecastCard({ data, units }) {
   const date = new Date(data.dt_txt).toLocaleDateString(undefined, {
     weekday: "short",
     month: "short",
@@ -15,7 +15,7 @@ function ForecastCard({ data }) {
       <img src={weatherIcon} alt={description} />
       <p>{description}</p>
       <p>
-        {tempMin}°C / {tempMax}°C
+        {tempMin}°{units === "metric" ? "C" : "F"} / {tempMax}°{units === "metric" ? "C" : "F"}
       </p>
     </div>
   );

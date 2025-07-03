@@ -1,7 +1,7 @@
 import ForecastCard from "./ForecastCard";
 import "./Forecast.css";
 
-function ForecastContainer({ data }) {
+function ForecastContainer({ data, units }) {
   if (!data) return null;
 
   // OpenWeatherMap returns 3-hour intervals
@@ -15,7 +15,7 @@ function ForecastContainer({ data }) {
       <h2>5-Day Forecast</h2>
       <div className="forecast-grid">
         {dailyForecasts.map((item) => (
-          <ForecastCard key={item.dt} data={item} />
+          <ForecastCard key={item.dt} data={item} units={units} />
         ))}
       </div>
     </div>
