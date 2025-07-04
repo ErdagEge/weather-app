@@ -36,7 +36,7 @@ A modern, responsive weather web application built with React, providing current
 1. **Clone the repository:**
 
 ```bash
-git clone https://github.com/yourusername/weather-app.git
+git clone https://github.com/ErdagEge/weather-app.git
 ```
 
 2. **Navigate into the project directory:**
