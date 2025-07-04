@@ -1,4 +1,6 @@
 import "./CurrentWeatherCard.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTemperatureHalf, faDroplet, faWind } from "@fortawesome/free-solid-svg-icons";
 
 function CurrentWeatherCard({ data, units }) {
   if (!data) return null;
@@ -18,9 +20,15 @@ function CurrentWeatherCard({ data, units }) {
       <h2>{name}</h2>
       <img src={weatherIcon} alt={weatherDescription} />
       <p>{weatherDescription}</p>
-      <p>Temperature: {temp}°{units === "metric" ? "C" : "F"}</p>
-      <p>Humidity: {humidity}%</p>
-      <p>Wind: {speed} m/s</p>
+      <p>
+        <FontAwesomeIcon icon={faTemperatureHalf} /> Temperature: {temp}°{units === "metric" ? "C" : "F"}
+      </p>
+      <p>
+        <FontAwesomeIcon icon={faDroplet} /> Humidity: {humidity}%
+      </p>
+      <p>
+        <FontAwesomeIcon icon={faWind} /> Wind: {speed} m/s
+      </p>
     </div>
   );
 }
