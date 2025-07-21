@@ -1,0 +1,36 @@
+.search-history {
+  text-align: center;
+  margin: 1rem auto;
+}
+
+.search-history ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.history-item {
+  display: flex;
+  align-items: center;
+}
+
+.history-city {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+  border: none;
+  border-radius: 1rem;
+  padding: 0.25rem 0.75rem;
+  cursor: pointer;
+  margin-right: 0.25rem;
+  color: #111;
+}
+
+.remove-button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #b00020;
+}

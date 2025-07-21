@@ -1,6 +1,7 @@
 import SearchBar from "./components/SearchBar";
 import CurrentWeatherCard from "./components/CurrentWeatherCard";
 import ForecastContainer from "./components/ForecastContainer";
+import SearchHistory from "./components/SearchHistory";
 import { fetchCurrentWeather, fetchForecast } from "./api/weather";
 import { useEffect, useState } from "react";
 import "./App.css";
@@ -12,6 +13,21 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [units, setUnits] = useState("metric"); // "metric" for °C, "imperial" for °F
+  const [history, setHistory] = useState([]);
+
+  const HISTORY_KEY = "searchHistory";
+  const MAX_HISTORY = 5;
+
+  useEffect(() => {
+    const stored = localStorage.getItem(HISTORY_KEY);
+    if (stored) {
+      try {
+        setHistory(JSON.parse(stored));
+      } catch {
+        setHistory([]);
+      }
+    }
+  }, []);
 
   useEffect(() => {
     if (weatherData) {
@@ -66,10 +82,30 @@ function App() {
       const forecast = await fetchForecast(city, units);
       setWeatherData(current);
       setForecastData(forecast);
+      // Update search history
+      let newHistory = history.filter(
+        (c) => c.toLowerCase() !== city.toLowerCase()
+      );
+      newHistory.unshift(city);
+      if (newHistory.length > MAX_HISTORY) {
+        newHistory = newHistory.slice(0, MAX_HISTORY);
+      }
+      localStorage.setItem(HISTORY_KEY, JSON.stringify(newHistory));
+      setHistory(newHistory);
     } catch (err) {
       setError("City not found or API error.");
     }
     setLoading(false);
+  };
+
+  const handleHistorySelect = (city) => {
+    handleSearch(city);
+  };
+
+  const handleHistoryRemove = (city) => {
+    const newHistory = history.filter((c) => c !== city);
+    localStorage.setItem(HISTORY_KEY, JSON.stringify(newHistory));
+    setHistory(newHistory);
   };
 
   return (
@@ -84,6 +120,11 @@ function App() {
           Switch to {units === "metric" ? "°F" : "°C"}
         </button>
       </div>
+      <SearchHistory
+        history={history}
+        onSelect={handleHistorySelect}
+        onRemove={handleHistoryRemove}
+      />
 
       {loading && <div className="spinner"></div>}
       {error && (
