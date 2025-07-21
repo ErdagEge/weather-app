@@ -12,6 +12,7 @@ A modern, responsive weather web application built with React, providing current
 - Detects current location via geolocation
 - Displays current temperature, humidity, wind speed, and weather conditions
 - 5-day forecast with daily high/low temperatures and condition icons
+- Local storage for displaying last searched cities
 - Unit toggle between Celsius and Fahrenheit
 - Responsive glassmorphism user interface
 - Smooth animations powered by React Spring
