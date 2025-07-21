@@ -37,21 +37,16 @@ A modern, responsive weather web application built with React, providing current
 
 ```bash
 git clone https://github.com/ErdagEge/weather-app.git
-```
-
-2. **Navigate into the project directory:**
-
-```bash
 cd weather-app
 ```
 
-3. **Install dependencies:**
+2. **Install dependencies:**
 
 ```bash
 npm install
 ```
 
-4. **Configure environment variables:**
+3. **Configure environment variables:**
 
 Create a .env file in the root of the project with the following:
 
@@ -59,7 +54,7 @@ Create a .env file in the root of the project with the following:
 REACT_APP_WEATHER_API_KEY=your_api_key_here
 ```
 
-5. **Run the development server:**
+4. **Run the development server:**
 
 ```bash
 npm start
